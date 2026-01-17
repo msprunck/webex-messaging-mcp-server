@@ -8,7 +8,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js";
 import { discoverTools } from "./lib/tools.js";
-import { initializeAuth, getFullAuthStatus, reauthenticate, logout } from "./lib/webex-config.js";
+import { initializeAuth, getFullAuthStatus, reauthenticate, logout, refreshAutoToken } from "./lib/webex-config.js";
 import { randomUUID } from "crypto";
 import { z } from "zod";
 
@@ -146,6 +146,34 @@ async function registerAuthPrompts(server) {
       };
     }
   );
+
+  // Refresh token prompt - for auto-refresh mode (macOS only)
+  if (process.platform === 'darwin' && process.env.WEBEX_AUTO_REFRESH_TOKEN === 'true') {
+    server.registerPrompt(
+      'refresh-token',
+      {
+        title: 'Refresh personal token',
+        description: 'Manually refresh personal access token via browser automation (macOS only).',
+        argsSchema: {}
+      },
+      async () => {
+        console.error('[Auth Prompt] Refreshing personal token...');
+        const result = await refreshAutoToken();
+        return {
+          messages: [{
+            role: 'user',
+            content: {
+              type: 'text',
+              text: result.success
+                ? `✓ ${result.message}`
+                : `✗ ${result.message}`
+            }
+          }]
+        };
+      }
+    );
+    console.error('[MCP Server] Registered refresh-token prompt (auto-refresh mode)');
+  }
 
   console.error('[MCP Server] Registered authentication prompts');
 }
