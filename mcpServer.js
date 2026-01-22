@@ -104,7 +104,7 @@ function registerAuthPrompts(server) {
         console.error('[Auth Prompt] Starting manual authentication for personal token...');
         const result = await startManualAuth();
         if (result.success) {
-          return promptResponse(`Browser opened!\n\n${result.instructions}\n\nOnce you've copied the token, run: /webex:confirm-token`);
+          return promptResponse(`Browser opened!\n\n${result.instructions}\n\nOnce you've copied the token, run: /webex:save-token`);
         }
         return promptResponse(`✗ ${result.message}`);
       }
@@ -126,12 +126,12 @@ function registerAuthPrompts(server) {
     }
   );
 
-  // Confirm token prompt - only for personal token flow
+  // Save token prompt - only for personal token flow
   server.registerPrompt(
-    'confirm-token',
+    'save-token',
     {
-      title: 'Confirm token copied',
-      description: 'After copying your Webex personal token, run this to complete authentication.',
+      title: 'Save token from clipboard',
+      description: 'After copying your Webex personal token, run this to save it.',
       argsSchema: {}
     },
     async () => {
@@ -143,39 +143,6 @@ function registerAuthPrompts(server) {
       console.error('[Auth Prompt] Completing manual authentication...');
       const result = await completeManualAuth();
       return promptResponse(result.success ? `✓ ${result.message}` : `✗ ${result.message}`);
-    }
-  );
-
-  // Re-authenticate prompt - handles different auth methods
-  server.registerPrompt(
-    're-authenticate',
-    {
-      title: 'Re-authenticate',
-      description: 'Force re-authentication with Webex.',
-      argsSchema: {}
-    },
-    async () => {
-      const hasStaticToken = !!process.env.WEBEX_PUBLIC_WORKSPACE_API_KEY;
-      const hasAutoRefresh = process.env.WEBEX_AUTO_REFRESH_TOKEN === 'true';
-
-      if (hasStaticToken) {
-        return promptResponse('✗ Cannot re-authenticate with static token. Update WEBEX_PUBLIC_WORKSPACE_API_KEY instead.');
-      }
-
-      if (hasAutoRefresh) {
-        console.error('[Auth Prompt] Starting re-authentication for personal token...');
-        const result = await startManualAuth();
-        if (result.success) {
-          return promptResponse(`Browser opened!\n\n${result.instructions}\n\nOnce you've copied the token, run: /webex:confirm-token`);
-        }
-        return promptResponse(`✗ ${result.message}`);
-      }
-
-      console.error('[Auth Prompt] Starting OAuth re-authentication...');
-      const result = await reauthenticate(true);
-      return promptResponse(result.success
-        ? `✓ ${result.message}. Your Webex session has been refreshed.`
-        : `✗ ${result.message}`);
     }
   );
 

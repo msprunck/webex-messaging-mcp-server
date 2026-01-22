@@ -56,9 +56,8 @@ Priority: Static Token > Auto-Refresh > OAuth. OAuth tokens are stored at `~/.we
 Authentication commands are available via the `/webex:` prefix:
 
 - `/webex:authenticate` - Authenticate with Webex (OAuth or browser automation depending on config)
-- `/webex:re-authenticate` - Force new authentication (for expired sessions or switching accounts)
+- `/webex:save-token` - (Personal token mode only) Save the token after copying it from the browser
 - `/webex:logout` - Clear stored tokens and logout
-- `/webex:refresh-token` - (Auto-refresh mode only, macOS) Manually trigger browser automation to refresh token
 
 The server starts without requiring authentication. Use `/webex:authenticate` when ready.
 
@@ -109,9 +108,9 @@ export { apiTool };
 2. User runs `/webex:authenticate` when ready
 3. `initializeAuth()` checks for static token first, then auto-refresh, then OAuth
 4. **OAuth flow**: Opens browser, stores tokens to `~/.webex-mcp/tokens.json`, auto-refreshes 5 min before expiry
-5. **Auto-refresh flow**: Opens Chrome, navigates to developer.webex.com, extracts token via JavaScript injection, stores in macOS Keychain, auto-refreshes 30 min before expiry
+5. **Personal token flow**: Opens browser to developer.webex.com, user copies token manually, runs `/webex:save-token`, token stored in macOS Keychain
 6. All tools use `getWebexHeaders()` which returns cached token
-7. User can use `/webex:re-authenticate` or `/webex:logout` as needed
+7. User can run `/webex:authenticate` again or `/webex:logout` as needed
 
 ## Testing
 
