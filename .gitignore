@@ -9,3 +9,4 @@ node_modules/
 # Test coverage
 coverage/
 .nyc_output/
+.claude/
