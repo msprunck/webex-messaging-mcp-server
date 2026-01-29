@@ -14,7 +14,7 @@ const executeFunction = async ({ personId, personDetails }) => {
     const url = getWebexUrl(`/people/${encodeURIComponent(personId)}?callingData=true&showAllTypes=true&minResponse=true`);
 
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Filter out null/undefined avatar field to avoid API errors
     const filteredPersonDetails = { ...personDetails };

@@ -15,7 +15,7 @@ const executeFunction = async ({ teamId, name, description }) => {
     const url = getWebexUrl(`/teams/${encodeURIComponent(teamId)}`);
 
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Prepare the body of the request
     const body = JSON.stringify({ name, description });

@@ -28,7 +28,7 @@ const executeFunction = async ({ roomId, personId, personEmail, isModerator = fa
 
     const body = JSON.stringify(requestBody);
 
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     const response = await fetch(url, {
       method: 'POST',

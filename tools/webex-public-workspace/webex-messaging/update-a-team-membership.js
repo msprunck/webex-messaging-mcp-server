@@ -14,7 +14,7 @@ const executeFunction = async ({ membershipId, isModerator }) => {
     const url = getWebexUrl(`/team/memberships/${encodeURIComponent(membershipId)}`);
 
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Prepare the request body
     const body = JSON.stringify({ isModerator });

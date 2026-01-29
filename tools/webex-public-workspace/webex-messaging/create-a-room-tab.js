@@ -15,7 +15,7 @@ const executeFunction = async ({ roomId, contentUrl, displayName }) => {
     const url = getWebexUrl('/room/tabs');
 
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Prepare the body of the request
     const body = JSON.stringify({

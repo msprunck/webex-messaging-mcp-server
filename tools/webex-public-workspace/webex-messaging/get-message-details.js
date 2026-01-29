@@ -13,7 +13,7 @@ const executeFunction = async ({ messageId }) => {
     const url = getWebexUrl(`/messages/${encodeURIComponent(messageId)}`);
 
     // Set up headers for the request
-    const headers = getWebexHeaders();
+    const headers = await getWebexHeaders();
 
     // Perform the fetch request
     const response = await fetch(url, {

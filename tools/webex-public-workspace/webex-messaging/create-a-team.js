@@ -17,7 +17,7 @@ const executeFunction = async ({ name, description }) => {
     const body = JSON.stringify({ name, description });
 
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Perform the fetch request
     const response = await fetch(url, {

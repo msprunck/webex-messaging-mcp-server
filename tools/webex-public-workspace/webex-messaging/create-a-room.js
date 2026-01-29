@@ -32,7 +32,7 @@ const executeFunction = async ({ title, teamId, classificationId, isLocked = fal
     const body = JSON.stringify(requestBody);
 
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Perform the fetch request
     const response = await fetch(getWebexUrl('/rooms'), {

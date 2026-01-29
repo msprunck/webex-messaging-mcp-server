@@ -16,7 +16,7 @@ const executeFunction = async ({ max = 100, ownedBy = 'org' }) => {
     url.searchParams.append('ownedBy', ownedBy);
 
     // Set up headers for the request
-    const headers = getWebexHeaders();
+    const headers = await getWebexHeaders();
 
     // Perform the fetch request
     const response = await fetch(url.toString(), {

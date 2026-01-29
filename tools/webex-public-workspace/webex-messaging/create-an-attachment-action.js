@@ -19,7 +19,7 @@ const executeFunction = async ({ type, messageId, inputs }) => {
     const url = getWebexUrl('/attachment/actions');
 
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Create the body of the request
     const body = JSON.stringify({

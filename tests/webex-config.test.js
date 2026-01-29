@@ -44,8 +44,8 @@ describe('Webex Configuration Module', () => {
       await initializeAuth();
     });
 
-    it('should return token without Bearer prefix', () => {
-      const token = getWebexToken();
+    it('should return token without Bearer prefix', async () => {
+      const token = await getWebexToken();
       assert.strictEqual(token, 'test-token-123');
     });
   });
@@ -56,8 +56,8 @@ describe('Webex Configuration Module', () => {
       await initializeAuth();
     });
 
-    it('should remove Bearer prefix if present', () => {
-      const token = getWebexToken();
+    it('should remove Bearer prefix if present', async () => {
+      const token = await getWebexToken();
       assert.strictEqual(token, 'test-token-123');
     });
   });
@@ -76,16 +76,16 @@ describe('Webex Configuration Module', () => {
       await initializeAuth();
     });
 
-    it('should return standard headers with Authorization', () => {
-      const headers = getWebexHeaders();
+    it('should return standard headers with Authorization', async () => {
+      const headers = await getWebexHeaders();
       assert.deepStrictEqual(headers, {
         'Accept': 'application/json',
         'Authorization': 'Bearer test-token-123'
       });
     });
 
-    it('should merge additional headers', () => {
-      const headers = getWebexHeaders({ 'Custom-Header': 'custom-value' });
+    it('should merge additional headers', async () => {
+      const headers = await getWebexHeaders({ 'Custom-Header': 'custom-value' });
       assert.deepStrictEqual(headers, {
         'Accept': 'application/json',
         'Authorization': 'Bearer test-token-123',
@@ -93,8 +93,8 @@ describe('Webex Configuration Module', () => {
       });
     });
 
-    it('should allow overriding default headers', () => {
-      const headers = getWebexHeaders({ 'Accept': 'text/plain' });
+    it('should allow overriding default headers', async () => {
+      const headers = await getWebexHeaders({ 'Accept': 'text/plain' });
       assert.deepStrictEqual(headers, {
         'Accept': 'text/plain',
         'Authorization': 'Bearer test-token-123'
@@ -108,8 +108,8 @@ describe('Webex Configuration Module', () => {
       await initializeAuth();
     });
 
-    it('should return JSON headers with Content-Type', () => {
-      const headers = getWebexJsonHeaders();
+    it('should return JSON headers with Content-Type', async () => {
+      const headers = await getWebexJsonHeaders();
       assert.deepStrictEqual(headers, {
         'Accept': 'application/json',
         'Authorization': 'Bearer test-token-123',
@@ -117,8 +117,8 @@ describe('Webex Configuration Module', () => {
       });
     });
 
-    it('should merge additional headers with JSON headers', () => {
-      const headers = getWebexJsonHeaders({ 'X-Custom': 'value' });
+    it('should merge additional headers with JSON headers', async () => {
+      const headers = await getWebexJsonHeaders({ 'X-Custom': 'value' });
       assert.deepStrictEqual(headers, {
         'Accept': 'application/json',
         'Authorization': 'Bearer test-token-123',
@@ -198,7 +198,7 @@ describe('Webex Configuration Module', () => {
       process.env.WEBEX_PUBLIC_WORKSPACE_API_KEY = 'static-test-token';
       await initializeAuth();
       assert.strictEqual(isAuthInitialized(), true);
-      assert.strictEqual(getWebexToken(), 'static-test-token');
+      assert.strictEqual(await getWebexToken(), 'static-test-token');
     });
 
     it('should throw when no auth method configured', async () => {

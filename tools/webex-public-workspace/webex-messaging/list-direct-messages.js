@@ -13,7 +13,7 @@ const executeFunction = async ({ parentId, personId, personEmail }) => {
   try {
     // Construct the URL with query parameters
     const url = new URL(getWebexUrl('/messages/direct'));
-    url.searchParams.append('parentId', parentId);
+    if (parentId) url.searchParams.append('parentId', parentId);
 
     // Add either personId OR personEmail, not both
     if (personId) {
@@ -23,7 +23,7 @@ const executeFunction = async ({ parentId, personId, personEmail }) => {
     }
 
     // Set up headers for the request
-    const headers = getWebexHeaders();
+    const headers = await getWebexHeaders();
 
     // Perform the fetch request
     const response = await fetch(url.toString(), {
@@ -34,7 +34,12 @@ const executeFunction = async ({ parentId, personId, personEmail }) => {
     // Check if the response was successful
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(JSON.stringify(errorData));
+      console.error(`[list-direct-messages] HTTP ${response.status}: ${JSON.stringify(errorData)}`);
+      // No 1:1 conversation exists, return empty collection
+      if (response.status === 403 && errorData.message === 'Failed to get one on one conversation') {
+        return { items: [] };
+      }
+      throw new Error(`HTTP ${response.status}: ${JSON.stringify(errorData)}`);
     }
 
     // Parse and return the response data

@@ -26,7 +26,7 @@ const executeFunction = async ({ name, targetUrl, resource, event, filter, secre
 
   try {
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Perform the fetch request
     const response = await fetch(getWebexUrl('/webhooks'), {

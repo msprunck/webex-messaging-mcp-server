@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm test:*)",
+      "mcp__webex__list_people",
+      "mcp__webex__list_direct_messages",
+      "mcp__webex__list_rooms",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix tool parameter requirements for flexible API usage\n\n- create_message: Make roomId optional to allow direct messaging via toPersonId/toPersonEmail\n- list_people: Make email optional to allow filtering by displayName only\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "mcp__webex__list_messages",
+      "Bash(git commit:*)",
+      "mcp__webex__get_room_details",
+      "mcp__webex__get_my_own_details",
+      "mcp__webex__list_teams",
+      "Bash(security find-generic-password:*)",
+      "Bash(git checkout:*)",
+      "Bash(security delete-generic-password:*)",
+      "Bash(git show:*)",
+      "Bash(osascript:*)",
+      "Bash(node mcpServer.js:*)",
+      "Bash(node -e \"import\\(''''./mcpServer.js''''\\)\")",
+      "Bash(pkill:*)",
+      "Bash(python3:*)",
+      "Skill(webex)",
+      "Skill(plugin-dev:command-development)",
+      "Skill(plugin-dev:hook-development)",
+      "WebFetch(domain:developer.webex.com)",
+      "Bash(curl:*)",
+      "Bash(node -e:*)",
+      "Bash(node --check:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(du:*)"
+    ]
+  }
+}

@@ -33,7 +33,7 @@ const executeFunction = async ({ roomId, title, classificationId, teamId, isLock
     });
 
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Perform the fetch request
     const response = await fetch(url, {

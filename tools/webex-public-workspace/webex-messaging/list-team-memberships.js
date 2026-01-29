@@ -16,7 +16,7 @@ const executeFunction = async ({ teamId, max = 100 }) => {
     url.searchParams.append('max', max.toString());
 
     // Set up headers for the request
-    const headers = getWebexHeaders();
+    const headers = await getWebexHeaders();
 
     // Perform the fetch request
     const response = await fetch(url.toString(), {

@@ -13,7 +13,7 @@ const executeFunction = async ({ webhookId }) => {
     const url = getWebexUrl('/webhooks/${encodeURIComponent(webhookId)}');
 
     // Set up headers for the request
-    const headers = getWebexHeaders();
+    const headers = await getWebexHeaders();
 
     // Perform the fetch request
     const response = await fetch(url, {

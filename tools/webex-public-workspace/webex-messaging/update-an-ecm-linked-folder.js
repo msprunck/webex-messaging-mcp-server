@@ -25,7 +25,7 @@ const executeFunction = async ({ id, roomId, contentUrl, displayName, driveId, i
       defaultFolder
     });
 
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     const response = await fetch(url, {
       method: 'PUT',

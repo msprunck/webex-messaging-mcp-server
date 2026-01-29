@@ -15,7 +15,7 @@ const executeFunction = async ({ roomId, contentUrl, displayName, driveId, itemI
 
   const url = getWebexUrl('/room/linkedFolders');
 
-  const headers = getWebexJsonHeaders();
+  const headers = await getWebexJsonHeaders();
 
   const body = JSON.stringify({
     roomId,

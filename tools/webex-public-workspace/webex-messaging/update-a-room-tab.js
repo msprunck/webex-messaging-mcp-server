@@ -23,7 +23,7 @@ const executeFunction = async ({ id, roomId, contentUrl, displayName }) => {
     });
 
     // Set up headers for the request
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Perform the fetch request
     const response = await fetch(url, {

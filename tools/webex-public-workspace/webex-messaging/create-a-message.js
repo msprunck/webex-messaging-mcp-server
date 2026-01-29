@@ -33,7 +33,7 @@ const executeFunction = async ({ roomId, parentId, toPersonId, toPersonEmail, te
 
     // Get the API URL and headers using the centralized config
     const url = getWebexUrl('/messages');
-    const headers = getWebexJsonHeaders();
+    const headers = await getWebexJsonHeaders();
 
     // Perform the fetch request
     const response = await fetch(url, {
